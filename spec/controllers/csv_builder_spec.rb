@@ -62,16 +62,22 @@ describe CsvBuilderReportsController do
 
   describe "Layout with options" do
     describe "output encoding" do
+      if RUBY_VERSION.to_f < 1.9
+        let(:expected_ascii) { generate({}, [['lb12.34' ,'aceeisuuz', 'foo']]) }
+        let(:expected_utf8) { generate({}, [['£12.34', 'ąčęėįšųūž', 'foo']]) }
+      else
+        let(:expected_ascii) { generate({}, [['?12.34' ,'?????????', 'foo']]) }
+        let(:expected_utf8) { generate({}, [['£12.34', 'ąčęėįšųūž', 'foo']]) }
+      end
+
       it "transliterates to ASCII when required" do
         get 'encoding', :format => 'csv', :encoding => 'ASCII'
-        correct_output = generate({}, [['aceeisuuz']])
-        response.body.to_s.should == correct_output
+        response.body.to_s.should == expected_ascii
       end
 
       it "keeps output in UTF-8 when required" do
         get 'encoding', :format => 'csv', :encoding => 'UTF-8'
-        correct_output = generate({}, [['ąčęėįšųūž']])
-        response.body.to_s.should == correct_output
+        response.body.to_s.should == expected_utf8
       end
     end
 

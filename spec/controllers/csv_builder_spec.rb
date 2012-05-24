@@ -25,7 +25,7 @@ class CsvBuilderReportsController < ApplicationController
 
   def encoding
     respond_to do |format|
-      format.csv { @output_encoding = params[:encoding] }
+      format.csv { @csv_options = { :encoding => Encoding.find(params[:encoding]) } }
     end
   end
 

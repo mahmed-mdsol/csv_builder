@@ -13,7 +13,7 @@ application.
 The current version of CSV Builder works with:
 
 * Rails 3.x
-* Ruby 1.8 or 1.9
+* Ruby 1.9
 * Unicorn _is required for streaming_ see [the example streaming app](https://github.com/fawce/test_csv_streamer) for more details.
 
 The legacy version (1.1.x) was originally developed and tested for Rails 2.1.  See [the legacy
@@ -48,14 +48,9 @@ your controller's action method e.g.
 
     @filename = 'report.csv'
 
-You can set the input encoding and output encoding by setting `@input_encoding` and `@output_encoding` instance
-variables.  These default to 'UTF-8' and 'LATIN1' respectively. e.g.
+You can set `@csv_options` instance variable to define options for CSV generation. For example: 
 
-    @output_encoding = 'UTF-8'
-
-You can set `@csv_options` instance variable to define options for FasterCSV generator. For example: 
-
-    @csv_options = { :force_quotes => true, :col_sep => ';' }
+    @csv_options = { :force_quotes => true, :col_sep => ';', :encoding => Encoding::UTF_8 }
 
 You can optionally stream your results line by line as they are generated. Results will stream if the underlying Rack server supports streaming, otherwise the results will be buffered and sent when the template finishes rendering. Just set `@streaming` to true:
 

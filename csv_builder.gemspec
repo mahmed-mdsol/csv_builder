@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
 
-  s.add_dependency('fastercsv') if RUBY_VERSION.to_f < 1.9
+  s.add_dependency('fastercsv') #if RUBY_VERSION.to_f < 1.9
 end
